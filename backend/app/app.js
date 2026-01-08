@@ -22,7 +22,7 @@ const pool = new pg.Pool({
 });
 
 async function initDb() {
-  // Creates a table and keep a counter row
+  // Creates a table and keeps a counter row
   await pool.query(`
     CREATE TABLE IF NOT EXISTS hits (
       id INT PRIMARY KEY,
