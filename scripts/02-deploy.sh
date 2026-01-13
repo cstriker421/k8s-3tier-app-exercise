@@ -1,35 +1,34 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-kubectl get ns k8s-3tier >/dev/null 2>&1 || kubectl create ns k8s-3tier
+NAMESPACE="${NAMESPACE:-k8s-3tier}"
 
-# Builds images inside Minikube's Docker daemon
-eval "$(minikube docker-env)"
+kubectl get ns "$NAMESPACE" >/dev/null 2>&1 || kubectl create ns "$NAMESPACE"
 
-docker build -t k8s-3tier-frontend:1.0 ./frontend/app
-docker build -t k8s-3tier-backend:1.0 ./backend/app
+# Builds images inside the cluster runtime
+minikube image build -t k8s-3tier-frontend:1.0 ./frontend/app
+minikube image build -t k8s-3tier-backend:1.0 ./backend/app
 
 # Applies in dependency order
-kubectl apply -f database/secret.yaml
-kubectl apply -f database/pvc.yaml
-kubectl apply -f database/service.yaml
-kubectl apply -f database/statefulset.yaml
+kubectl apply -n "$NAMESPACE" -f database/secret.yaml
+kubectl apply -n "$NAMESPACE" -f database/pvc.yaml
+kubectl apply -n "$NAMESPACE" -f database/service.yaml
+kubectl apply -n "$NAMESPACE" -f database/statefulset.yaml
 
-kubectl apply -f backend/configmap.yaml
-kubectl apply -f backend/deployment.yaml
-kubectl apply -f backend/service.yaml
+kubectl apply -n "$NAMESPACE" -f backend/configmap.yaml
+kubectl apply -n "$NAMESPACE" -f backend/deployment.yaml
+kubectl apply -n "$NAMESPACE" -f backend/service.yaml
 
-kubectl apply -f frontend/deployment.yaml
-kubectl apply -f frontend/service.yaml
+kubectl apply -n "$NAMESPACE" -f frontend/deployment.yaml
+kubectl apply -n "$NAMESPACE" -f frontend/service.yaml
 
-kubectl apply -f ingress/ingress.yaml
+kubectl apply -n "$NAMESPACE" -f ingress/ingress.yaml
 
 # Waits for readiness
-kubectl rollout status -n k8s-3tier statefulset/postgres
-kubectl rollout status -n k8s-3tier deployment/backend
-kubectl rollout status -n k8s-3tier deployment/frontend
+kubectl rollout status -n "$NAMESPACE" statefulset/postgres --timeout=60s
+kubectl rollout status -n "$NAMESPACE" deployment/backend --timeout=60s
+kubectl rollout status -n "$NAMESPACE" deployment/frontend --timeout=60s
 
 echo
-echo "Deployed. Try:"
-echo "  http://$(minikube ip)/"
-echo "  http://$(minikube ip)/api/health"
+echo "📨  Deployed. Try:"
+echo "📋  http://$(minikube ip)/ and http://$(minikube ip)/api/health via 'make test'"
