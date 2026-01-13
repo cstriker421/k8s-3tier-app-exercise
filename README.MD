@@ -48,8 +48,6 @@ Ingress (nginx)
      +--> Backend Service --> Backend Pods --> PostgreSQL StatefulSet --> PVC  
 ```
 
----
-
 ## Prerequisites
 
 - Docker (Docker Desktop recommended)
@@ -155,16 +153,12 @@ Deletes the application namespace and all associated resources.
 - **PersistentVolumeClaim**
 - **Ingress**
 
----
-
 ## Design Notes
 
 - The system is fully automated to reflect an infrastructure/architecture workflow.
 - Images builds are handled inside the cluster runtime to avoid environment drift.
 - The application is portable across environments that support Minikube.
 - All configuration and secrets are externalized using Kubernetes-native mechanisms.
-
----
 
 ## Educational Context
 
@@ -173,7 +167,5 @@ This project was developed as part of a Kubernetes module to demonstrate:
 - Clean repository structure.
 - Automation best practices
 - End-to-end application deployment
-
----
 
 ## Thank you!
