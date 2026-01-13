@@ -43,6 +43,7 @@ The application consists of three layers:
 
 ## Architecture Diagram
 
+```
 User Browser  
      |  
      v  
@@ -51,6 +52,7 @@ Ingress (nginx)
      +--> Frontend Service --> Frontend Pods  
      |  
      +--> Backend Service --> Backend Pods --> PostgreSQL StatefulSet --> PVC  
+```
 
 ---
 
@@ -66,7 +68,8 @@ Ingress (nginx)
 
 ## Repository Structure
 
-```k8s-3tier-app-exercise/
+```
+k8s-3tier-app-exercise/
 ├── README.md
 ├── namespace.yaml
 ├── frontend/
@@ -95,7 +98,8 @@ Ingress (nginx)
 │   ├── 02-deploy.sh
 │   ├── 03-test.sh
 │   └── 04-cleanup.sh
-└── Makefile```
+└── Makefile
+```
 
 ---
 
