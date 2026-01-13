@@ -5,8 +5,6 @@ This repository contains a simple **3-tier application** deployed on a **local K
 The application demonstrates the core Kubernetes concepts covered in the module
 with a strong emphasis on **automation and reproducibility**.
 
----
-
 ## Key concepts Demonstrated
 
 - Deployments and horizontal scaling
@@ -16,8 +14,6 @@ with a strong emphasis on **automation and reproducibility**.
 - StatefulSets for databases
 - Ingress for external access
 - Automation using shell scripts and Makefile
-
----
 
 ## Application Overview
 
@@ -38,8 +34,6 @@ The application consists of three layers:
    - PostgreSQL  
    - Deployed as a StatefulSet  
    - Uses a PersistentVolumeClaim for persistent data storage
-
----
 
 ## Architecture Diagram
 
@@ -63,8 +57,6 @@ Ingress (nginx)
 - kubectl
 - GNU Make
 - Bash-compatible shell
-
----
 
 ## Repository Structure
 
@@ -101,8 +93,6 @@ k8s-3tier-app-exercise/
 └── Makefile
 ```
 
----
-
 ## How to Run (Reccomended: Makefile)
 > **All operational steps are automated.**
 > No manual Docker or kubectl commands are required.
@@ -116,8 +106,6 @@ This will:
 - Enable the nginx ingress controller
 - Create the Kubernetes namespace
 
----
-
 ### 2. Build images and deploy the application
 
 `make deploy`
@@ -126,8 +114,6 @@ This will:
 - Build frontend and backend images directly inside Minikube
 - Deploy all Kubernetes resources in the correct dependency order
 - Wait for workloads to become ready
-
----
 
 ### 3. Test the deployment
 
@@ -138,8 +124,6 @@ This will:
 - Deploy all Kubernetes resources in the correct dependency order
 - Wait for workloads to become ready
 
----
-
 ### 4. View deployment status
 
 `make status`
@@ -149,23 +133,17 @@ This shows:
 - ConfigMaps, Secrets
 - StatefulSets and PVCs
 
----
-
 ### 5. Scale the backend
 
 `make scale N=3`
 
 This demonstrates horizontal scaling of the backend Deployment (by three replicas in this example).
 
----
-
 ### 6. Cleanup
 
 `make cleanup`
 
 Deletes the application namespace and all associated resources.
-
----
 
 ## Kubernetes Objects Used
 
